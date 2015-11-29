@@ -6,6 +6,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 char Precede(char left, char right){
 	//判断left运算符和right运算符之间的优先关系
@@ -45,14 +46,14 @@ int Operate(int left, char ope, int right){
 		case '+':return left+right;
 		case '-':return left-right;
 		case '*':return left*right;
-		case '/':if(0==right) exit("ERROR"); return left/right;
+		case '/':if(0==right) exit(1); return left/right;
 	}
 }//Operate
 
 Status Check(const char *source){
 	//检查source串的内容是否符合EvaluateExpression函数的要求
 	//source串只能包含0-9 + - * / ( ) 字符 且括号要配对
-	char *index=source;
+	const char *index=source;
 	int bracket=0, len;
 	len=strlen(source);
 	while(len--){
@@ -89,7 +90,6 @@ Status EvaluateExpression(char *expression, int *result){
 	*--index='#';					//空出来的空间填#
 
 	//创建运算符栈OPTR 操作数栈OPND
-	//c不能使用模板 所以OPTR的数据类型是int 存取char类型运算符依赖于内置类型转换
 
 	SqStack OPTR, OPND;
 	InitStack_Sq(&OPTR);InitStack_Sq(&OPND);
@@ -99,10 +99,12 @@ Status EvaluateExpression(char *expression, int *result){
 	//开始运算
 
 	index=expression;
-	GetTop_Sq(OPTR, &PoundSign);			//如果PoundSign为char类型的话就会出现不知道什么鬼的错误
+	GetTop_Sq(OPTR, &PoundSign);
 	while('#'!=*index||'#'!=PoundSign){
+        //判断是否是数字
 		if(isdigit(*index)){
 			int char2number=0;
+            //字符串转换成数字
 			while(isdigit(*index)){
 				char2number*=10;
 				char2number+=*index-'0';
@@ -112,7 +114,7 @@ Status EvaluateExpression(char *expression, int *result){
 		}
 		else{
 		    //ope为OPTR栈顶操作符 temp无意义
-		    char ope,temp;
+		    int ope,temp;
 		    GetTop_Sq(OPTR, &ope);
 			switch(Precede(ope, *index)){
 				//栈顶元素优先权低
@@ -121,7 +123,7 @@ Status EvaluateExpression(char *expression, int *result){
 				case '=':Pop_Sq(&OPTR, &temp);index++;break;
 				//退栈并将运算结果入栈
 				case '>':{
-					char theta;
+					int theta;
 					int a, b;
 					Pop_Sq(&OPTR, &theta);
 					Pop_Sq(&OPND, &b);Pop_Sq(&OPND, &a);
