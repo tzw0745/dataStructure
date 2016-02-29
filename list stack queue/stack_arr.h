@@ -23,4 +23,4 @@ void Pop( Stack S );
 ElementType Top( Stack S );
 ElementType TopAndPop( Stack S );
 
-#endif	/* STACK_ARR_H */
+#endif    /* STACK_ARR_H */

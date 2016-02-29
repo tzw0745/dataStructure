@@ -25,4 +25,4 @@ Position First( List L );
 Position Next( Position P );
 ElementType Retrieve( Position P );
 
-#endif	/* LIST_H */
+#endif    /* LIST_H */

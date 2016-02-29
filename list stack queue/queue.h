@@ -22,4 +22,4 @@ void Dequeu( Queue Q );
 ElementType Front( Queue Q );
 ElementType FrontAndDequeue( Queue Q );
 
-#endif	/* QUEUE_H */
+#endif    /* QUEUE_H */

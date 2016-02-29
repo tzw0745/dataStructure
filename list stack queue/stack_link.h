@@ -19,4 +19,4 @@ void Push( ElementType X, Stack S );
 void Pop( Stack S );
 ElementType Top( Stack S );
 
-#endif	/* STACK_LINK_H */
+#endif    /* STACK_LINK_H */
